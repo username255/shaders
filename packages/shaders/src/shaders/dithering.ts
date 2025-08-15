@@ -57,6 +57,10 @@ ${declareSimplexNoise}
 ${declarePI}
 ${declareRandomB}
 
+float random(vec2 st) {
+  return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+}
+
 float getSimplexNoise(vec2 uv, float t) {
   float noise = .5 * snoise(uv - vec2(0., .3 * t));
   noise += .5 * snoise(2. * uv + vec2(0., .32 * t));
@@ -109,7 +113,7 @@ void main() {
   ${sizingUV}
 
   vec2 dithering_uv = pxSizeUv;
-  vec2 ditheringNoise_uv = 500. * uv;
+  vec2 ditheringNoise_uv = uv;
   vec2 shape_uv = objectUV;
   if (u_shape < 3.5) {
     shape_uv = patternUV;
@@ -184,7 +188,7 @@ void main() {
 
   switch (type) {
     case 1: {
-      dithering = step(.5 + .5 * snoise(ditheringNoise_uv), shape);
+      dithering = step(random(ditheringNoise_uv), shape);
     } break;
     case 2:
       dithering = getBayerValue(dithering_uv, 2);
@@ -231,7 +235,6 @@ export interface DitheringUniforms extends ShaderSizingUniforms {
   u_shape: (typeof DitheringShapes)[DitheringShape];
   u_type: (typeof DitheringTypes)[DitheringType];
   u_pxSize: number;
-  u_noiseTexture?: HTMLImageElement;
 }
 
 export interface DitheringParams extends ShaderSizingParams, ShaderMotionParams {

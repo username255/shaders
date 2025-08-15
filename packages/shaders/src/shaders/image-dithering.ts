@@ -1,6 +1,5 @@
 import type { ShaderMotionParams } from '../shader-mount.js';
 import { sizingUV, type ShaderSizingParams, type ShaderSizingUniforms } from '../shader-sizing.js';
-import { declareSimplexNoise } from '../shader-utils.js';
 
 /**
  * Dithering effect over user texture using 3-color palette
@@ -63,7 +62,9 @@ float getUvFrame(vec2 uv, vec2 px) {
   return left * right * bottom * top;
 }
 
-${declareSimplexNoise}
+float random(vec2 st) {
+  return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+}
 
 const int bayer2x2[4] = int[4](0, 2, 3, 1);
 const int bayer4x4[16] = int[16](
@@ -106,7 +107,8 @@ void main() {
   ${sizingUV}
 
   vec2 dithering_uv = pxSizeUv;
-  vec2 ditheringNoise_uv = 500. * uv;
+  vec2 ditheringNoise_uv = uv;
+  
   vec4 image = texture(u_image, imageUV);
   float frame = getUvFrame(imageUV, pxSize / u_resolution.xy);
 
@@ -117,7 +119,7 @@ void main() {
 
   switch (type) {
     case 1: {
-      dithering = step(.5 + .5 * snoise(ditheringNoise_uv), lum);
+      dithering = step(random(ditheringNoise_uv), lum);
     } break;
     case 2:
       dithering = getBayerValue(dithering_uv, 2);
