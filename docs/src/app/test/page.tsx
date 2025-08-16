@@ -3,14 +3,20 @@
 import { Test, testPresets } from '@paper-design/shaders-react';
 import { folder, useControls, button } from 'leva';
 import { setParamsSafe, useResetLevaParams } from '@/helpers/use-reset-leva-params';
+import { useColors } from '@/helpers/use-colors';
 import { BackButton } from '@/components/back-button';
 import { cleanUpLevaParams } from '@/helpers/clean-up-leva-params';
 import { ShaderFit, ShaderFitOptions } from '@paper-design/shaders';
 import Link from 'next/link';
 
-const { worldWidth, worldHeight, ...defaults } = testPresets[0].params;
+const { worldWidth, worldHeight, color1, color2, color3, backgroundColor, ...defaults } = testPresets[0].params;
 
 export default function TestPage() {
+  const { colors: colorsArray, setColors } = useColors({
+    defaultColors: [color1, color2, color3, backgroundColor],
+    maxColorCount: 4,
+  });
+
   const [params, setParams] = useControls(() => ({
     'Raymarching': folder({
       iterations: { value: defaults.iterations, min: 20, max: 150, step: 1, label: 'Ray Steps' },
@@ -40,6 +46,22 @@ export default function TestPage() {
     }, { order: 5, collapsed: true }),
   }), []);
 
+  // Add preset buttons
+  useControls(() => {
+    const presets = Object.fromEntries(
+      testPresets.map(({ name, params: { worldWidth, worldHeight, color1, color2, color3, backgroundColor, ...preset } }) => [
+        name,
+        button(() => {
+          setColors([color1, color2, color3, backgroundColor]);
+          setParamsSafe(params, setParams, preset);
+        }),
+      ])
+    );
+    return {
+      Presets: folder(presets, { order: -1 }),
+    };
+  });
+
   useResetLevaParams(params, setParams, defaults);
   cleanUpLevaParams(params);
 
@@ -50,6 +72,10 @@ export default function TestPage() {
       </Link>
       <Test
         {...params}
+        color1={colorsArray[0]}
+        color2={colorsArray[1]}
+        color3={colorsArray[2]}
+        backgroundColor={colorsArray[3]}
         className="fixed size-full"
       />
     </>

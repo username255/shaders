@@ -1,4 +1,4 @@
-import type { vec2 } from '../types.js';
+import type { vec2, vec4 } from '../types.js';
 import type { ShaderMotionParams } from '../shader-mount.js';
 import { sizingVariablesDeclaration, type ShaderSizingParams, type ShaderSizingUniforms } from '../shader-sizing.js';
 import { colorBandingFix } from '../shader-utils.js';
@@ -29,6 +29,12 @@ uniform float u_colorShift;      // Color palette shift
 uniform float u_shapeSize;       // Size of the repeated shapes
 uniform float u_brightness;      // Overall brightness
 
+// Color parameters
+uniform vec4 u_color1;           // Primary color
+uniform vec4 u_color2;           // Secondary color
+uniform vec4 u_color3;           // Tertiary color
+uniform vec4 u_backgroundColor;  // Background color
+
 ${sizingVariablesDeclaration}
 
 out vec4 fragColor;
@@ -52,10 +58,10 @@ void main() {
         d,                                 // Distance to nearest surface
         z = fract(dot(C, sin(C))) - 0.5;  // Ray distance + noise for anti-banding
     
-    vec4 
-        o = vec4(0.0),  // Accumulated color/lighting
-        p,              // Current 3D position along ray
-        O;              // Saved position for lighting
+    vec3 accumulatedColor = vec3(0.0);  // Accumulated color
+    float accumulatedAlpha = 0.0;       // Accumulated alpha/intensity
+    vec4 p;                              // Current 3D position along ray
+    vec4 O;                              // Saved position for lighting
     
     vec2 r = u_resolution.xy;  // Screen resolution
     
@@ -83,10 +89,31 @@ void main() {
         // Bob Ross would call this a "happy little accident"
         p.xy *= mat2(cos(O + vec4(0, 11, 33, 0)));
         
-        // Calculate color based on position and space distortion
-        // The sin() creates a nice looking palette, division by dot() creates falloff
-        O = (1.0 + sin(0.5 * O.z + length(p - O) + vec4(0, 4, 3, 6) + u_colorShift))
-            / (0.5 + 2.0 * dot(O.xy, O.xy));
+        // Calculate phase for color mixing
+        float phase = 0.5 * O.z + length(p - O) + u_colorShift;
+        
+        // Create three different phases for color blending
+        float phase1 = sin(phase * 0.7);
+        float phase2 = sin(phase * 1.1 + 2.094);
+        float phase3 = sin(phase * 0.9 + 4.189);
+        
+        // Normalize phases to 0-1 range
+        phase1 = phase1 * 0.5 + 0.5;
+        phase2 = phase2 * 0.5 + 0.5;
+        phase3 = phase3 * 0.5 + 0.5;
+        
+        // Calculate which color dominates
+        float total = phase1 + phase2 + phase3;
+        phase1 /= total;
+        phase2 /= total;
+        phase3 /= total;
+        
+        // Mix the three colors based on phases
+        vec3 colorMix = u_color1.rgb * phase1 + u_color2.rgb * phase2 + u_color3.rgb * phase3;
+        
+        // Calculate intensity falloff
+        float intensity = 1.0 / (0.5 + 2.0 * dot(O.xy, O.xy));
+        O = vec4(colorMix, intensity);
         
         // Domain repetition - repeats the shapes infinitely
         p = abs(fract(p) - 0.5);
@@ -96,12 +123,19 @@ void main() {
         d = abs(min(length(p.xy) - u_shapeSize, min(p.x, p.y) + 1e-3)) + 1e-3;
         
         // Add lighting contribution (brighter when closer to surfaces)
-        o += O.w / d * O;
+        float contribution = O.w / d;
+        accumulatedColor += O.rgb * contribution;
+        accumulatedAlpha += contribution;
     }
     
-    // tanh() compresses the accumulated brightness to 0-1 range
-    // (Like HDR tone mapping in photography)
-    vec4 color = tanh(o / (20000.0 / u_brightness));
+    // Normalize and apply tone mapping
+    accumulatedColor = accumulatedColor / max(accumulatedAlpha, 1.0);
+    float alpha = tanh(accumulatedAlpha * 0.0001 * u_brightness);
+    
+    // Mix with background
+    vec3 finalColor = mix(u_backgroundColor.rgb, accumulatedColor, alpha);
+    
+    vec4 color = vec4(finalColor, 1.0);
     
     ${colorBandingFix}
     
@@ -116,6 +150,10 @@ export interface TestShaderUniforms extends ShaderSizingUniforms {
   u_shapeSize: number;
   u_brightness: number;
   u_mouse: vec2;
+  u_color1: vec4;
+  u_color2: vec4;
+  u_color3: vec4;
+  u_backgroundColor: vec4;
 }
 
 export interface TestShaderParams extends ShaderSizingParams, ShaderMotionParams {
@@ -127,4 +165,8 @@ export interface TestShaderParams extends ShaderSizingParams, ShaderMotionParams
   brightness?: number;
   mouseX?: number;
   mouseY?: number;
+  color1?: string;
+  color2?: string;
+  color3?: string;
+  backgroundColor?: string;
 }
