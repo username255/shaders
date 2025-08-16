@@ -1,0 +1,142 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/settings-schema.json",
+  "permissions": {
+    "allow": [
+      {
+        "tool": "bash",
+        "command": "bun run build"
+      },
+      {
+        "tool": "bash",
+        "command": "bun run build:*"
+      },
+      {
+        "tool": "bash",
+        "command": "bun run dev"
+      },
+      {
+        "tool": "bash",
+        "command": "bun run dev:*"
+      },
+      {
+        "tool": "bash",
+        "command": "bun install"
+      },
+      {
+        "tool": "bash",
+        "command": "bun install:*"
+      },
+      {
+        "tool": "bash",
+        "command": "bun add *"
+      },
+      {
+        "tool": "bash",
+        "command": "npm run build"
+      },
+      {
+        "tool": "bash",
+        "command": "npm run build:*"
+      },
+      {
+        "tool": "bash",
+        "command": "npm run dev"
+      },
+      {
+        "tool": "bash",
+        "command": "npm run dev:*"
+      },
+      {
+        "tool": "bash",
+        "command": "npm install"
+      },
+      {
+        "tool": "bash",
+        "command": "npm install:*"
+      },
+      {
+        "tool": "bash",
+        "command": "curl *"
+      },
+      {
+        "tool": "bash",
+        "command": "cd *"
+      },
+      {
+        "tool": "bash",
+        "command": "ls *"
+      },
+      {
+        "tool": "bash",
+        "command": "cat *"
+      },
+      {
+        "tool": "bash",
+        "command": "git status"
+      },
+      {
+        "tool": "bash",
+        "command": "git diff"
+      },
+      {
+        "tool": "bash",
+        "command": "git log *"
+      }
+    ]
+  },
+  "tools": {
+    "enabled": [
+      "read",
+      "write",
+      "edit",
+      "multiedit",
+      "ls",
+      "grep",
+      "glob",
+      "bash",
+      "bashoutput",
+      "killbash",
+      "websearch",
+      "webfetch",
+      "task",
+      "todowrite"
+    ]
+  },
+  "defaultMode": "code",
+  "codeSettings": {
+    "enableLinting": true,
+    "enableTypeChecking": true,
+    "autoRunCommands": [
+      "bun run build"
+    ],
+    "projectType": "typescript",
+    "framework": "react",
+    "testCommand": "bun test"
+  },
+  "behaviorSettings": {
+    "verbosity": "concise",
+    "confirmBeforeRun": [
+      "rm",
+      "rm -rf"
+    ],
+    "autoFixErrors": true,
+    "showProgress": true
+  },
+  "projectContext": {
+    "type": "monorepo",
+    "packages": [
+      "packages/shaders",
+      "packages/shaders-react",
+      "docs"
+    ],
+    "mainTechnologies": [
+      "WebGL",
+      "GLSL",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Bun"
+    ],
+    "description": "Paper Shaders - WebGL shader library with React components for animated visual effects"
+  }
+}
