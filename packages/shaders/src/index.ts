@@ -203,6 +203,14 @@ export {
   type InfiniteTravelShaderUniforms,
 } from './shaders/infinite-travel.js';
 
+// ----- Northern Lights Shader ----- //
+/** Northern Lights shader - aurora borealis simulation with flowing patterns */
+export {
+  northernLightsFragmentShader,
+  type NorthernLightsShaderParams,
+  type NorthernLightsShaderUniforms,
+} from './shaders/northern-lights.js';
+
 // ----- Utils ----- //
 export { getShaderColorFromString } from './get-shader-color-from-string.js';
 export { getShaderNoiseTexture } from './get-shader-noise-texture.js';

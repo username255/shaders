@@ -107,6 +107,10 @@ export { InfiniteTravel, infiniteTravelPresets } from './shaders/infinite-travel
 export type { InfiniteTravelShaderProps } from './shaders/infinite-travel.js';
 export type { InfiniteTravelShaderParams } from '@paper-design/shaders';
 
+export { NorthernLights, northernLightsPresets } from './shaders/northern-lights.js';
+export type { NorthernLightsShaderProps } from './shaders/northern-lights.js';
+export type { NorthernLightsShaderParams } from '@paper-design/shaders';
+
 export { isPaperShaderElement, getShaderColorFromString } from '@paper-design/shaders';
 export type { PaperShaderElement, ShaderFit, ShaderSizingParams, ShaderSizingUniforms } from '@paper-design/shaders';
 
