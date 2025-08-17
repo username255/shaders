@@ -4,7 +4,7 @@ import { sizingVariablesDeclaration, type ShaderSizingParams, type ShaderSizingU
 import { colorBandingFix } from '../shader-utils.js';
 
 /**
- * Test shader for GLSL experimentation
+ * Infinite Travel shader
  * Raymarching fractal tunnel with dynamic lighting
  * 
  * This shader uses raymarching to render 3D fractals.
@@ -13,7 +13,7 @@ import { colorBandingFix } from '../shader-utils.js';
  */
 
 // language=GLSL
-export const testFragmentShader: string = `#version 300 es
+export const infiniteTravelFragmentShader: string = `#version 300 es
 precision mediump float;
 
 uniform float u_time;
@@ -142,7 +142,7 @@ void main() {
     fragColor = color;
 }`;
 
-export interface TestShaderUniforms extends ShaderSizingUniforms {
+export interface InfiniteTravelShaderUniforms extends ShaderSizingUniforms {
   u_iterations: number;
   u_stepSize: number;
   u_rotationSpeed: number;
@@ -156,7 +156,7 @@ export interface TestShaderUniforms extends ShaderSizingUniforms {
   u_backgroundColor: vec4;
 }
 
-export interface TestShaderParams extends ShaderSizingParams, ShaderMotionParams {
+export interface InfiniteTravelShaderParams extends ShaderSizingParams, ShaderMotionParams {
   iterations?: number;
   stepSize?: number;
   rotationSpeed?: number;

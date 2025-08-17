@@ -1,6 +1,6 @@
 'use client';
 
-import { Test, testPresets } from '@paper-design/shaders-react';
+import { InfiniteTravel, infiniteTravelPresets } from '@paper-design/shaders-react';
 import { folder, useControls, button } from 'leva';
 import { setParamsSafe, useResetLevaParams } from '@/helpers/use-reset-leva-params';
 import { useColors } from '@/helpers/use-colors';
@@ -9,9 +9,9 @@ import { cleanUpLevaParams } from '@/helpers/clean-up-leva-params';
 import { ShaderFit, ShaderFitOptions } from '@paper-design/shaders';
 import Link from 'next/link';
 
-const { worldWidth, worldHeight, color1, color2, color3, backgroundColor, ...defaults } = testPresets[0].params;
+const { worldWidth, worldHeight, color1, color2, color3, backgroundColor, ...defaults } = infiniteTravelPresets[0].params;
 
-export default function TestPage() {
+export default function InfiniteTravelPage() {
   const { colors: colorsArray, setColors } = useColors({
     defaultColors: [color1, color2, color3, backgroundColor],
     maxColorCount: 4,
@@ -49,7 +49,7 @@ export default function TestPage() {
   // Add preset buttons
   useControls(() => {
     const presets = Object.fromEntries(
-      testPresets.map(({ name, params: { worldWidth, worldHeight, color1, color2, color3, backgroundColor, ...preset } }) => [
+      infiniteTravelPresets.map(({ name, params: { worldWidth, worldHeight, color1, color2, color3, backgroundColor, ...preset } }) => [
         name,
         button(() => {
           setColors([color1, color2, color3, backgroundColor]);
@@ -70,7 +70,7 @@ export default function TestPage() {
       <Link href="/">
         <BackButton />
       </Link>
-      <Test
+      <InfiniteTravel
         {...params}
         color1={colorsArray[0]}
         color2={colorsArray[1]}

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Test Shader - Raymarching Fractal',
-  description: 'Raymarching fractal tunnel with dynamic lighting - GLSL experimentation playground',
+  title: 'Infinite Travel Shader - Raymarching Fractal',
+  description: 'Raymarching fractal tunnel with dynamic lighting creating an infinite travel experience',
 };
 
 export default function Layout({

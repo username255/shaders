@@ -1,9 +1,9 @@
 'use client';
 
-import { Test } from '@paper-design/shaders-react';
+import { InfiniteTravel } from '@paper-design/shaders-react';
 import { folder, useControls } from 'leva';
 
-export default function TestExample() {
+export default function InfiniteTravelExample() {
   const { 
     iterations,
     stepSize,
@@ -35,7 +35,7 @@ export default function TestExample() {
   });
 
   return (
-    <Test
+    <InfiniteTravel
       iterations={iterations}
       stepSize={stepSize}
       rotationSpeed={rotationSpeed}

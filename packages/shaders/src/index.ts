@@ -195,13 +195,13 @@ export {
   type ImageDitheringUniforms,
 } from './shaders/image-dithering.js';
 
-// ----- Test Shader ----- //
-/** Test shader for GLSL experimentation - sea/ocean simulation */
+// ----- Infinite Travel Shader ----- //
+/** Infinite Travel shader - raymarching fractal tunnel with dynamic lighting */
 export {
-  testFragmentShader,
-  type TestShaderParams,
-  type TestShaderUniforms,
-} from './shaders/test.js';
+  infiniteTravelFragmentShader,
+  type InfiniteTravelShaderParams,
+  type InfiniteTravelShaderUniforms,
+} from './shaders/infinite-travel.js';
 
 // ----- Utils ----- //
 export { getShaderColorFromString } from './get-shader-color-from-string.js';

@@ -3,18 +3,18 @@ import { ShaderMount, type ShaderComponentProps } from '../shader-mount.js';
 import {
   defaultObjectSizing,
   ShaderFitOptions,
-  testFragmentShader,
+  infiniteTravelFragmentShader,
   getShaderColorFromString,
-  type TestShaderParams,
-  type TestShaderUniforms,
+  type InfiniteTravelShaderParams,
+  type InfiniteTravelShaderUniforms,
   type ShaderPreset,
 } from '@paper-design/shaders';
 
-export interface TestShaderProps extends ShaderComponentProps, TestShaderParams {}
+export interface InfiniteTravelShaderProps extends ShaderComponentProps, InfiniteTravelShaderParams {}
 
-type TestPreset = ShaderPreset<TestShaderParams>;
+type InfiniteTravelPreset = ShaderPreset<InfiniteTravelShaderParams>;
 
-export const defaultPreset: TestPreset = {
+export const defaultPreset: InfiniteTravelPreset = {
   name: 'Default',
   params: {
     ...defaultObjectSizing,
@@ -35,7 +35,7 @@ export const defaultPreset: TestPreset = {
   },
 };
 
-export const neonPreset: TestPreset = {
+export const neonPreset: InfiniteTravelPreset = {
   name: 'Neon',
   params: {
     ...defaultObjectSizing,
@@ -56,7 +56,7 @@ export const neonPreset: TestPreset = {
   },
 };
 
-export const sunsetPreset: TestPreset = {
+export const sunsetPreset: InfiniteTravelPreset = {
   name: 'Sunset',
   params: {
     ...defaultObjectSizing,
@@ -77,7 +77,7 @@ export const sunsetPreset: TestPreset = {
   },
 };
 
-export const oceanPreset: TestPreset = {
+export const oceanPreset: InfiniteTravelPreset = {
   name: 'Ocean',
   params: {
     ...defaultObjectSizing,
@@ -98,13 +98,13 @@ export const oceanPreset: TestPreset = {
   },
 };
 
-export const testPresets: TestPreset[] = [defaultPreset, neonPreset, sunsetPreset, oceanPreset];
+export const infiniteTravelPresets: InfiniteTravelPreset[] = [defaultPreset, neonPreset, sunsetPreset, oceanPreset];
 
 /**
- * Test shader component for GLSL experimentation
+ * Infinite Travel shader component
  * Raymarching fractal tunnel with dynamic lighting and customizable parameters
  */
-export const Test: React.FC<TestShaderProps> = memo(function Test({
+export const InfiniteTravel: React.FC<InfiniteTravelShaderProps> = memo(function InfiniteTravel({
   // Own props
   iterations = defaultPreset.params.iterations,
   stepSize = defaultPreset.params.stepSize,
@@ -132,7 +132,7 @@ export const Test: React.FC<TestShaderProps> = memo(function Test({
   worldWidth = defaultPreset.params.worldWidth,
   worldHeight = defaultPreset.params.worldHeight,
   ...props
-}: TestShaderProps) {
+}: InfiniteTravelShaderProps) {
   const uniforms = {
     // Own uniforms
     u_iterations: iterations,
@@ -157,14 +157,14 @@ export const Test: React.FC<TestShaderProps> = memo(function Test({
     u_originY: originY,
     u_worldWidth: worldWidth,
     u_worldHeight: worldHeight,
-  } satisfies TestShaderUniforms;
+  } satisfies InfiniteTravelShaderUniforms;
 
   return (
     <ShaderMount
       {...props}
       speed={speed}
       frame={frame}
-      fragmentShader={testFragmentShader}
+      fragmentShader={infiniteTravelFragmentShader}
       uniforms={uniforms}
     />
   );
