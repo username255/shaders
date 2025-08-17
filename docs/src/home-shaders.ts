@@ -23,6 +23,10 @@ import flutedGlassImg from '../public/shaders/fluted-glass.webp';
 import imageDitheringImg from '../public/shaders/image-dithering.webp';
 import paperTextureImg from '../public/shaders/paper-texture.webp';
 import waterImg from '../public/shaders/water.webp';
+// Images for new shaders - will be added when screenshots are taken
+// import infiniteTravelImg from '../public/shaders/infinite-travel.webp';
+// import northernLightsImg from '../public/shaders/northern-lights.webp';
+// import auroraImg from '../public/shaders/aurora.webp';
 
 import {
   DotGrid,
@@ -75,6 +79,12 @@ import {
   waterPresets,
   ImageDithering,
   imageDitheringPresets,
+  InfiniteTravel,
+  infiniteTravelPresets,
+  NorthernLights,
+  northernLightsPresets,
+  Aurora,
+  auroraPresets,
 } from '@paper-design/shaders-react';
 import { StaticImageData } from 'next/image';
 
@@ -262,5 +272,26 @@ export const homeShaders = [
     ShaderComponent: Water,
     image: waterImg,
     shaderConfig: { ...waterPresets[0].params, scale: 0.8 },
+  },
+  {
+    name: 'infinite travel',
+    url: '/infinite-travel',
+    ShaderComponent: InfiniteTravel,
+    // image: infiniteTravelImg, // Image to be added
+    shaderConfig: { ...infiniteTravelPresets[0].params, scale: 0.5, speed: 1.5 },
+  },
+  {
+    name: 'northern lights',
+    url: '/northern-lights',
+    ShaderComponent: NorthernLights,
+    // image: northernLightsImg, // Image to be added
+    shaderConfig: { ...northernLightsPresets[0].params, scale: 0.6, speed: 1.0 },
+  },
+  {
+    name: 'aurora',
+    url: '/aurora',
+    ShaderComponent: Aurora,
+    // image: auroraImg, // Image to be added
+    shaderConfig: { ...auroraPresets[0].params, scale: 0.7, speed: 1.0 },
   },
 ] satisfies HomeShaderConfig[];

@@ -211,6 +211,14 @@ export {
   type NorthernLightsShaderUniforms,
 } from './shaders/northern-lights.js';
 
+// ----- Aurora Shader ----- //
+/** Aurora shader - volumetric aurora borealis effect with raymarching */
+export {
+  auroraFragmentShader,
+  type AuroraShaderParams,
+  type AuroraShaderUniforms,
+} from './shaders/aurora.js';
+
 // ----- Utils ----- //
 export { getShaderColorFromString } from './get-shader-color-from-string.js';
 export { getShaderNoiseTexture } from './get-shader-noise-texture.js';

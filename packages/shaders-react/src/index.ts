@@ -111,6 +111,10 @@ export { NorthernLights, northernLightsPresets } from './shaders/northern-lights
 export type { NorthernLightsShaderProps } from './shaders/northern-lights.js';
 export type { NorthernLightsShaderParams } from '@paper-design/shaders';
 
+export { Aurora, auroraPresets } from './shaders/aurora.js';
+export type { AuroraShaderProps } from './shaders/aurora.js';
+export type { AuroraShaderParams } from '@paper-design/shaders';
+
 export { isPaperShaderElement, getShaderColorFromString } from '@paper-design/shaders';
 export type { PaperShaderElement, ShaderFit, ShaderSizingParams, ShaderSizingUniforms } from '@paper-design/shaders';
 
